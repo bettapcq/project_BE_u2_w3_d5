@@ -3,6 +3,7 @@ package bettapcq.projectu2w3d5.services;
 import bettapcq.projectu2w3d5.entities.Event;
 import bettapcq.projectu2w3d5.entities.User;
 import bettapcq.projectu2w3d5.exceptions.BadRequestException;
+import bettapcq.projectu2w3d5.exceptions.NotFoundException;
 import bettapcq.projectu2w3d5.payloads.NewEventsDTO;
 import bettapcq.projectu2w3d5.repositories.EventsRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +37,10 @@ public class EventsService {
         log.info("New event with id " + newEventSaved.getEventId() + " has been created");
 
         return newEventSaved;
+    }
+
+    public Event findById(Long userId) {
+        return this.eventsRepository.findById(userId).orElseThrow(() -> new NotFoundException(userId));
     }
 
 }

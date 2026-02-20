@@ -18,7 +18,6 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     private Long eventId;
-
     @Column(nullable = false)
     private LocalDate date;
     @Column(nullable = false)
