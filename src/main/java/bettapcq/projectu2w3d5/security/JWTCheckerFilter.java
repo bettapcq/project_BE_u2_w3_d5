@@ -46,9 +46,9 @@ public class JWTCheckerFilter extends OncePerRequestFilter {
 
 
         //recupero id da token:
-        Long employeeId = jwtTools.extractIdFromToken(accessToken);
+        Long userId = jwtTools.extractIdFromToken(accessToken);
 
-        User authenticatedUser = this.usersService.findById(employeeId);
+        User authenticatedUser = this.usersService.findById(userId);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(authenticatedUser, null, authenticatedUser.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
