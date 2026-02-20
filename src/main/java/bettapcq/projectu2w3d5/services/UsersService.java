@@ -3,6 +3,7 @@ package bettapcq.projectu2w3d5.services;
 import bettapcq.projectu2w3d5.entities.Role;
 import bettapcq.projectu2w3d5.entities.User;
 import bettapcq.projectu2w3d5.exceptions.BadRequestException;
+import bettapcq.projectu2w3d5.exceptions.NotFoundException;
 import bettapcq.projectu2w3d5.payloads.UsersDTO;
 import bettapcq.projectu2w3d5.repositories.UsersRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -35,5 +36,14 @@ public class UsersService {
 
         //salvo
         return this.usersRepository.save(newUser);
+    }
+
+
+    public User findById(Long userId) {
+        return this.usersRepository.findById(userId).orElseThrow(() -> new NotFoundException(userId));
+    }
+
+    public User findByEmail(String email) {
+        return this.usersRepository.findByEmail(email);
     }
 }
