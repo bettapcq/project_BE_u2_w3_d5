@@ -4,6 +4,7 @@ import bettapcq.projectu2w3d5.entities.Event;
 import bettapcq.projectu2w3d5.entities.User;
 import bettapcq.projectu2w3d5.exceptions.BadRequestException;
 import bettapcq.projectu2w3d5.exceptions.NotFoundException;
+import bettapcq.projectu2w3d5.exceptions.UnauthorizedException;
 import bettapcq.projectu2w3d5.payloads.NewEventsDTO;
 import bettapcq.projectu2w3d5.repositories.EventsRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -42,5 +43,12 @@ public class EventsService {
     public Event findById(Long userId) {
         return this.eventsRepository.findById(userId).orElseThrow(() -> new NotFoundException(userId));
     }
+
+    public void findByIdAndDelete(Long eventId, User currentCreator) {
+        Event found = this.eventsRepository.findById(eventId).orElseThrow(() -> new NotFoundException(eventId));
+        if (found.getCreator() != currentCreator) throw new UnauthorizedException("You're not allowed");
+        this.eventsRepository.delete(found);
+    }
+
 
 }

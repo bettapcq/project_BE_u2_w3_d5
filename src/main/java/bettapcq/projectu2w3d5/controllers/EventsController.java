@@ -37,4 +37,18 @@ public class EventsController {
 
         return this.eventsService.addEvent(currentAuthUser.getUserId(), payload);
     }
+
+    //DELETE BY ID
+    @DeleteMapping("me/{eventId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('CREATOR')")
+    public void deleteEvent(@AuthenticationPrincipal User currentAuthUser, @PathVariable Long eventId) {
+
+
+        this.eventsService.findByIdAndDelete(eventId, currentAuthUser);
+    }
+
+
+    //PUT
+
 }
