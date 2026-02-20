@@ -3,6 +3,7 @@ package bettapcq.projectu2w3d5.exceptions;
 import bettapcq.projectu2w3d5.payloads.ErrorsDTO;
 import bettapcq.projectu2w3d5.payloads.ErrorsListDTO;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -11,6 +12,14 @@ import java.time.LocalDateTime;
 
 @RestControllerAdvice
 public class ErrorsHandler {
+
+    //not found:
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorsDTO handleNotFound(NotFoundException ex) {
+        return new ErrorsDTO(ex.getMessage(), LocalDateTime.now());
+    }
+
 
     //bad req:
     @ExceptionHandler(BadRequestException.class)
@@ -31,6 +40,13 @@ public class ErrorsHandler {
     public ErrorsDTO handleUnouthorizedException(UnauthorizedException ex) {
         return new ErrorsDTO(ex.getMessage(), LocalDateTime.now());
 
+    }
+
+    //forbidden:
+    @ExceptionHandler(AuthorizationDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErrorsDTO handleForbidden(AuthorizationDeniedException ex) {
+        return new ErrorsDTO("Access denied for this account!", LocalDateTime.now());
     }
 
     //default:

@@ -4,18 +4,24 @@ import bettapcq.projectu2w3d5.entities.User;
 import bettapcq.projectu2w3d5.exceptions.UnauthorizedException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 @Component
+@Slf4j
 public class JWTTools {
-    @Value("${jwt.secret")
+    @Value("${jwt.secret}")
     private String secret;
+
 
     //crea token:
     public String createToken(User user) {
+
+        log.info("****SECRET= " + secret);
+
         return Jwts.builder().issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7))
                 .subject(String.valueOf(user.getUserId()))

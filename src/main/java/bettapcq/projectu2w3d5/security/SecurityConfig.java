@@ -1,4 +1,4 @@
-package bettapcq.projectu2w3d5.services;
+package bettapcq.projectu2w3d5.security;
 
 
 import org.springframework.context.annotation.Bean;

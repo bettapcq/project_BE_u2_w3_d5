@@ -2,6 +2,8 @@ package bettapcq.projectu2w3d5.controllers;
 
 import bettapcq.projectu2w3d5.entities.User;
 import bettapcq.projectu2w3d5.exceptions.ValidationException;
+import bettapcq.projectu2w3d5.payloads.LoginDTO;
+import bettapcq.projectu2w3d5.payloads.LoginResponseDTO;
 import bettapcq.projectu2w3d5.payloads.UsersDTO;
 import bettapcq.projectu2w3d5.services.AuthService;
 import bettapcq.projectu2w3d5.services.UsersService;
@@ -37,5 +39,12 @@ public class AuthController {
 
         return this.usersService.addUser(payload);
     }
+
+    //login:
+    @PostMapping("/login")
+    public LoginResponseDTO login(@RequestBody LoginDTO payload) {
+        return new LoginResponseDTO(this.authService.checkLoginAndCreateToken(payload));
+    }
+
 
 }
